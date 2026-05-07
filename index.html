@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Los Santos County Sheriff's Department Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h3>Los Santos County Sheriff's Department</h3>
+        <h4>Field Training Program</h4>
+        
+        <div class="info-grid">
+            <div><strong>FTO FULL NAME: </strong><input type="text"></div>
+            <div><strong>PHASE: </strong><input type="text"></div>
+            <div><strong>FTP FULL NAME: </strong><input type="text"></div>
+            <div><strong>DATE: </strong><input type="date"></div>
+        </div>
+    </header>
+
+    <hr class="thick-line">
+
+    <section class="instructions">
+        <h5>RATING INSTRUCTION</h5>
+        <hr class="thin-line">
+        <p>Rate observed behavior on the scale one to seven. You must comment on the most and least acceptable performance of the day. Specific comments are required for all ratings below "3", above "6", and "N.R.T." (Not Responding to Training). Check the "N.O." (Not Observed) box if a category is not observed. Check the "N.R.T." box if the Trainee fails to respond to training.</p>
+    </section>
+
+    <hr class="thick-line">
+
+    <section class="tasks">
+        <h5>TASK CHECKLIST</h5>
+        <hr class="thin-line">
+        <table>
+            <thead>
+                <tr>
+                    <th>TASK</th>
+                    <th>RATING</th>
+                    <th>N.O.</th>
+                    <th>N.R.T.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Grooming</td><td><input type="number" min="1" max="7"></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+                <tr><td>Driving Skills</td><td><input type="number" min="1" max="7"></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+                <tr><td>Radio Usage</td><td><input type="number" min="1" max="7"></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+                <tr><td>Verbal Control</td><td><input type="number" min="1" max="7"></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+                <tr><td>Physical Contact</td><td><input type="number" min="1" max="7"></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+                <tr><td>Investigation Skills</td><td><input type="number" min="1" max="7"></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+                <tr><td>Problem Solving/Decision Making</td><td><input type="number" min="1" max="7"></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+                <tr><td>Acceptance of Feedback</td><td><input type="number" min="1" max="7"></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+                <tr><td>Attitude Toward Police Work</td><td><input type="number" min="1" max="7"></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+                <tr><td>Relationship with Public</td><td><input type="number" min="1" max="7"></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <hr class="thick-line">
+
+    <section class="narrative">
+        <h5>NARRATIVE</h5>
+        <hr class="thin-line">
+        <input type="text" placeholder="Enter narrative comments here..." style="width: 100%; height: 150px;"></input>
+    </section>
+</div>
+
+</body>
+</html>
