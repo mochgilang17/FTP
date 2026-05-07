@@ -67,7 +67,7 @@
     <section class="narrative">
         <h5>NARRATIVE</h5>
         <hr class="thin-line">
-        <input type="text" placeholder="Enter narrative comments here..." style="width: 100%; height: 150px;"></input>
+        <textarea class="narrative-box" placeholder="Enter narrative comments here..."></textarea>
     </section>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -79,23 +79,50 @@
 </div>
 
 <script>
-    document.getElementById('download-btn').addEventListener('click', function() {
-        const target = document.querySelector(".container");
-        
-        html2canvas(target, {
-            scale: 2, // Meningkatkan resolusi gambar
-            backgroundColor: "#ffffff" // Memastikan background putih
-        }).then(canvas => {
-            // Ubah ke format JPG
-            const image = canvas.toDataURL("image/jpeg", 0.9);
-            
-            // Buat link download otomatis
-            const link = document.createElement('a');
-            link.download = 'LSPD-Field-Training-Report.jpg';
-            link.href = image;
-            link.click();
-        });
+document.getElementById('download-btn').addEventListener('click', function() {
+    const target = document.querySelector(".container");
+    const textarea = document.querySelector(".narrative-box");
+    
+    // 1. Buat elemen div sementara untuk menampung teks narrative
+    const tempDiv = document.createElement("div");
+    
+    // 2. Copy teks dari textarea ke div tersebut
+    tempDiv.innerText = textarea.value;
+    
+    // 3. Copy styling agar tampilan div sama persis dengan textarea
+    tempDiv.style.width = "100%";
+    tempDiv.style.minHeight = "150px";
+    tempDiv.style.padding = "10px";
+    tempDiv.style.border = "1px solid #ccc";
+    tempDiv.style.fontSize = "0.85em";
+    tempDiv.style.lineHeight = "1.5";
+    tempDiv.style.whiteSpace = "pre-wrap"; // KUNCI UTAMA: agar teks bungkus/pindah baris
+    tempDiv.style.wordWrap = "break-word";
+    tempDiv.style.boxSizing = "border-box";
+    tempDiv.style.fontFamily = "inherit";
+
+    // 4. Tukar posisi sementara: Sembunyikan textarea, tampilkan div
+    textarea.style.display = "none";
+    textarea.parentNode.appendChild(tempDiv);
+
+    // 5. Proses ekstrak ke JPG
+    html2canvas(target, {
+        scale: 2,
+        backgroundColor: "#ffffff",
+        logging: false,
+        useCORS: true
+    }).then(canvas => {
+        const image = canvas.toDataURL("image/jpeg", 0.9);
+        const link = document.createElement('a');
+        link.download = 'LSPD-Field-Training-Report.jpg';
+        link.href = image;
+        link.click();
+
+        // 6. Kembalikan seperti semula setelah selesai
+        textarea.style.display = "block";
+        tempDiv.remove();
     });
+});
 </script>
 </body>
 </html>
