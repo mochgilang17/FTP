@@ -81,46 +81,56 @@
 <script>
 document.getElementById('download-btn').addEventListener('click', function() {
     const target = document.querySelector(".container");
-    const textarea = document.querySelector(".narrative-box");
-    
-    // 1. Buat elemen div sementara untuk menampung teks narrative
-    const tempDiv = document.createElement("div");
-    
-    // 2. Copy teks dari textarea ke div tersebut
-    tempDiv.innerText = textarea.value;
-    
-    // 3. Copy styling agar tampilan div sama persis dengan textarea
-    tempDiv.style.width = "100%";
-    tempDiv.style.minHeight = "150px";
-    tempDiv.style.padding = "10px";
-    tempDiv.style.border = "1px solid #ccc";
-    tempDiv.style.fontSize = "0.85em";
-    tempDiv.style.lineHeight = "1.5";
-    tempDiv.style.whiteSpace = "pre-wrap"; // KUNCI UTAMA: agar teks bungkus/pindah baris
-    tempDiv.style.wordWrap = "break-word";
-    tempDiv.style.boxSizing = "border-box";
-    tempDiv.style.fontFamily = "inherit";
+    const inputs = target.querySelectorAll("input[type='text'], input[type='time'], input[type='date'], input[type='number']");
+    const textareas = target.querySelectorAll("textarea");
+    const tempElements = [];
 
-    // 4. Tukar posisi sementara: Sembunyikan textarea, tampilkan div
-    textarea.style.display = "none";
-    textarea.parentNode.appendChild(tempDiv);
+    // 1. Sembunyikan tombol download agar tidak ikut terfoto (safety measure)
+    this.style.visibility = "hidden";
 
-    // 5. Proses ekstrak ke JPG
+    // 2. Fungsi untuk menukar input/textarea menjadi Span agar render sempurna
+    const replaceWithSpan = (el) => {
+        const span = document.createElement("span");
+        span.innerText = el.value || " "; // Beri spasi jika kosong agar layout tidak hancur
+        
+        // Copy basic styling
+        span.style.display = "inline-block";
+        span.style.fontFamily = "inherit";
+        span.style.fontSize = window.getComputedStyle(el).fontSize;
+        span.style.color = "#333";
+        span.style.borderBottom = "1px solid #eee";
+        span.style.minWidth = el.offsetWidth + "px";
+
+        el.style.display = "none";
+        el.parentNode.insertBefore(span, el);
+        tempElements.push({ span, el });
+    };
+
+    inputs.forEach(replaceWithSpan);
+    textareas.forEach(replaceWithSpan);
+
+    // 3. Proses ekspor
     html2canvas(target, {
-        scale: 2,
+        scale: 3, // Naikkan ke 3 agar hasil lebih tajam/HD
         backgroundColor: "#ffffff",
         logging: false,
-        useCORS: true
+        useCORS: true,
+        allowTaint: true,
+        windowWidth: target.scrollWidth, // Pastikan menangkap lebar penuh
+        windowHeight: target.scrollHeight
     }).then(canvas => {
-        const image = canvas.toDataURL("image/jpeg", 0.9);
+        const image = canvas.toDataURL("image/jpeg", 1.0);
         const link = document.createElement('a');
-        link.download = 'LSPD-Field-Training-Report.jpg';
+        link.download = `LSPD-Report-${Date.now()}.jpg`;
         link.href = image;
         link.click();
 
-        // 6. Kembalikan seperti semula setelah selesai
-        textarea.style.display = "block";
-        tempDiv.remove();
+        // 4. Kembalikan semua ke bentuk semula
+        tempElements.forEach(item => {
+            item.span.remove();
+            item.el.style.display = "";
+        });
+        this.style.visibility = "visible";
     });
 });
 </script>
